@@ -858,46 +858,64 @@ components:
           example: 10
         start_at:
           type: string
+          format: date-time
           example: 2023-01-08 04:05:06
         end_at:
           type: string
+          format: date-time
           example: 2023-01-08 10:05:06
     UserInWorkSession:
       type: object
+      required:
+        - id
       properties:
         id:
           type: number
           example: 10
-        imageUrl:
+        image_url:
           type: string
           example: 'https://s3.amazonaws.com/time-tracker/images/users/10/01.png'
     Task:
+      required:
+        - id
+        - list_id
+        - name
+        - time
+      description: time property is the number of seconds. The default value is 0.
       type: object
       properties:
         id:
           type: number
           example: 1
-        tabId:
+        list_id:
           type: number
           example: 2
-        listId:
-          type: number
         name:
           type: string
+          example: Write API docs
         description:
           type: string
+          example: Write API documentation of the backend API with Swagger.
         time:
           type: number
+          example: 600
     List:
+      description: The default value of tasks property is an empty array, not null.
       type: object
+      required:
+        - id
+        - tab_id
+        - name
+        - display_order
+        - tasks
       properties:
         id:
           type: number
-        tabId:
+        tab_id:
           type: string
         name:
           type: string
-        displayOrder:
+        display_order:
           type: number
         tasks:
           type: array
@@ -908,7 +926,7 @@ components:
       properties:
         id:
           type: number
-        tabName:
+        name:
           type: string
         lists:
           type: array
@@ -916,12 +934,22 @@ components:
             $ref: '#/components/schemas/List'
     WorkSession:
       type: object
+      required:
+        - id
+        - start_at
+        - tabs
       properties:
         id:
           type: number
+          example: 10
         start_at:
           type: string
           format: date-time
+          example: 2023-01-08 10:05:06
+        end_at:
+          type: string
+          format: date-time
+          example: null
         tabs:
           type: array
           items:
