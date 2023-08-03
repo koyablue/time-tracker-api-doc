@@ -27,6 +27,9 @@ servers:
 tags:
   - name: work session
   - name: tab
+  - name: list
+  - name: task
+  - name: template
   - name: pet
     description: Everything about your Pets
     externalDocs:
@@ -324,6 +327,73 @@ paths:
       responses:
         '204':
           description: Successful operation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Record not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /work_sessions/{workSessionId}/tabs/{tabId}/lists:
+    post:
+      tags:
+        - list
+      summary: Create a new list
+      description: Create a new list
+      operationId: createList
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: On going
+                display_order:
+                  type: number
+                  example: 2
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - tab_id
+                  - name
+                  - display_order
+                properties:
+                  id:
+                    type: number
+                    example: 10
+                  tab_id:
+                    type: number
+                    example: 2
+                  name:
+                    type: string
+                    example: On going
+                  display_order:
+                    type: number
+                    example: 2
+                  tasks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Task'
+                    example: []
         '401':
           description: Unauthorized
           content:
