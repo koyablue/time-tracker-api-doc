@@ -118,7 +118,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NewWorkSessionRes'
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/UserInWorkSession'
+                  work_session:
+                    $ref: '#/components/schemas/WorkSession'
         '401':
           description: Unauthorized
           content:
@@ -857,6 +862,70 @@ components:
         end_at:
           type: string
           example: 2023-01-08 10:05:06
+    UserInWorkSession:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 10
+        imageUrl:
+          type: string
+          example: 'https://s3.amazonaws.com/time-tracker/images/users/10/01.png'
+    Task:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        tabId:
+          type: number
+          example: 2
+        listId:
+          type: number
+        name:
+          type: string
+        description:
+          type: string
+        time:
+          type: number
+    List:
+      type: object
+      properties:
+        id:
+          type: number
+        tabId:
+          type: string
+        name:
+          type: string
+        displayOrder:
+          type: number
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+    Tab:
+      type: object
+      properties:
+        id:
+          type: number
+        tabName:
+          type: string
+        lists:
+          type: array
+          items:
+            $ref: '#/components/schemas/List'
+    WorkSession:
+      type: object
+      properties:
+        id:
+          type: number
+        start_at:
+          type: string
+          format: date-time
+        tabs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tab'
     Pet:
       required:
         - name
