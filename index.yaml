@@ -658,7 +658,7 @@ paths:
             format: int64
         - name: taskId
           in: path
-          description: id of a list
+          description: id of a task
           required: true
           schema:
             type: integer
@@ -710,6 +710,62 @@ paths:
                   total_time:
                     type: number
                     example: 1200
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Record not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - task
+      summary: Delete a task
+      description: Delete a task
+      operationId: deleteTask
+      parameters:
+        - name: workSessionId
+          in: path
+          description: id of a work session
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: tabId
+          in: path
+          description: id of a tab
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: listId
+          in: path
+          description: id of a list
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: taskId
+          in: path
+          description: id of a task
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Successful operation
         '401':
           description: Unauthorized
           content:
