@@ -504,6 +504,55 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - list
+      summary: Delete a list
+      description: Delete a list
+      operationId: deleteList
+      parameters:
+        - name: workSessionId
+          in: path
+          description: id of a work session
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: tabId
+          in: path
+          description: id of a tab
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: listId
+          in: path
+          description: id of a list
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Successful operation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Record not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
     NewWorkSessionRes:
