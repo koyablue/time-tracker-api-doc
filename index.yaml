@@ -939,6 +939,58 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /users/{userId}/templates/{templateId}:
+    delete:
+      tags:
+        - template
+      summary: Delete a template
+      description: Delete a template
+      operationId: deleteTemplate
+      parameters:
+        - name: userId
+          in: path
+          description: id of a tab
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - tabs
+              properties:
+                name:
+                  type: string
+                  example: Daily routine 1
+                tabs:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/TabInTemplate'
+      responses:
+        '204':
+          description: Successful operation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Record not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
     NewWorkSessionRes:
