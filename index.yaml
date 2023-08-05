@@ -1,16 +1,42 @@
 openapi: 3.0.3
 info:
-  title: Swagger Petstore - OpenAPI 3.0
+  title: TimeTracker backend API doc - OpenAPI 3.0.3
   description: |-
-    This is a documentation for the backend API of TimeTracker.  
+    This is a documentation for the backend API of TimeTracker.
   version: 0.0.1
 tags:
+  - name: auth
   - name: work session
   - name: tab
   - name: list
   - name: task
   - name: template
 paths:
+  # auth
+  # /register:
+  #   post:
+  #     tags:
+  #       - auth
+  #     summary: Register a new user
+  #     description: Register a new user
+  #     operationId: registerUser
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             required:
+  #               - email
+  #               - display_order
+  #             type: object
+  #             properties:
+  #               email:
+  #                 type: string
+  #                 example: example@example.com
+  #               password:
+  #                 type: number
+  #                 example: 2
+
+
   # work-sessions
   /users/{userId}/work-sessions:
     post:
