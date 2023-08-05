@@ -11,6 +11,7 @@ tags:
   - name: task
   - name: template
 paths:
+  # work-sessions
   /users/{userId}/work-sessions:
     post:
       tags:
@@ -113,6 +114,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+
+  # tabs
   /work-sessions/{workSessionId}/tabs:
     post:
       tags:
@@ -145,6 +148,10 @@ paths:
               schema:
                 required:
                   - id
+                  - work_session_id
+                  - name
+                  - display_order
+                  - lists
                 type: object
                 properties:
                   id:
@@ -215,6 +222,10 @@ paths:
               schema:
                 required:
                   - id
+                  - work_session_id
+                  - name
+                  - display_order
+                  - lists
                 type: object
                 properties:
                   id:
@@ -282,6 +293,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+
+  # lists
   /work_sessions/{workSessionId}/tabs/{tabId}/lists:
     post:
       tags:
@@ -297,6 +310,9 @@ paths:
           application/json:
             schema:
               type: object
+              required:
+                - name
+                - display_order
               properties:
                 name:
                   type: string
@@ -316,6 +332,7 @@ paths:
                   - tab_id
                   - name
                   - display_order
+                  - tasks
                 properties:
                   id:
                     type: number
@@ -368,6 +385,9 @@ paths:
           application/json:
             schema:
               type: object
+              required:
+                - name
+                - display_order
               properties:
                 name:
                   type: string
@@ -387,6 +407,7 @@ paths:
                   - tab_id
                   - name
                   - display_order
+                  - tasks
                 properties:
                   id:
                     type: number
@@ -454,6 +475,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+
+  # tasks
   /work_sessions/{workSessionId}/tabs/{tabId}/lists/{listId}/tasks:
     post:
       tags:
@@ -701,6 +724,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+
+  # templates
   /users/{userId}/templates:
     post:
       tags:
@@ -950,6 +975,10 @@ components:
             $ref: '#/components/schemas/Task'
     Tab:
       type: object
+      required:
+        - id
+        - name
+        - lists
       properties:
         id:
           type: number
@@ -978,6 +1007,7 @@ components:
       required:
         - name
         - display_order
+        - lists
       properties:
         name:
           type: string
