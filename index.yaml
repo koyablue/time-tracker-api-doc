@@ -11,13 +11,15 @@ tags:
   - name: task
   - name: template
 paths:
-  /work-sessions:
+  /users/{userId}/work-sessions:
     post:
       tags:
         - work session
       summary: Create a new work session
-      description: Create a new work session to start the session. Store the start time
+      description: Create a new work session
       operationId: createWorkSession
+      parameters:
+        - $ref: '#/components/parameters/userId'
       responses:
         '201':
           description: Successful operation
@@ -37,21 +39,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /work-sessions/{workSessionId}:
+  /users/{userId}/work-sessions/{workSessionId}/end:
     put:
       tags:
         - work session
-      summary: Update a work session
-      description: Update a work session to end the session. Store the end time.
-      operationId: updateWorkSession
+      summary: End a work session
+      description: End a work session. Store the end time
+      operationId: endWorkSession
       parameters:
-        - name: workSessionId
-          in: path
-          description: id of a work session to update
-          required: true
-          schema:
-            type: integer
-            format: int64
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/workSessionId'
       responses:
         '200':
           description: Successful operation
@@ -77,16 +74,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /work-sessions/latest:
+  /users/{userId}/work-sessions/latest:
     get:
       tags:
         - work session
       summary: Get the latest work session
       description: Get the latest work session wiht null end_at value.
       operationId: getLatestWorkSession
+      parameters:
+        - $ref: '#/components/parameters/userId'
       responses:
         '200':
-          description: Successful operation
+          description: Successful operation. If there is no record, the response is null.
           content:
             application/json:
               schema:
@@ -122,13 +121,7 @@ paths:
       description: Create a new tab
       operationId: createTab
       parameters:
-        - name: workSessionId
-          in: path
-          description: id of a work session to update
-          required: true
-          schema:
-            type: integer
-            format: int64
+        - $ref: '#/components/parameters/workSessionId'
       requestBody:
         content:
           application/json:
@@ -197,20 +190,8 @@ paths:
       description: Update a tab
       operationId: updateTab
       parameters:
-        - name: workSessionId
-          in: path
-          description: id of a work session to update
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: tabId
-          in: path
-          description: id of a tab to update
-          required: true
-          schema:
-            type: integer
-            format: int64
+        - $ref: '#/components/parameters/workSessionId'
+        - $ref: '#/components/parameters/tabId'
       requestBody:
         content:
           application/json:
@@ -278,20 +259,8 @@ paths:
       description: Delete a tab
       operationId: deleteTab
       parameters:
-        - name: workSessionId
-          in: path
-          description: id of a work session to update
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: tabId
-          in: path
-          description: id of a tab to update
-          required: true
-          schema:
-            type: integer
-            format: int64
+        - $ref: '#/components/parameters/workSessionId'
+        - $ref: '#/components/parameters/tabId'
       responses:
         '204':
           description: Successful operation
@@ -321,20 +290,8 @@ paths:
       description: Create a new list
       operationId: createList
       parameters:
-        - name: workSessionId
-          in: path
-          description: id of a work session
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: tabId
-          in: path
-          description: id of a tab
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - $ref: '#/components/parameters/workSessionId'
+      - $ref: '#/components/parameters/tabId'
       requestBody:
         content:
           application/json:
@@ -403,27 +360,9 @@ paths:
       description: Update a list
       operationId: updateList
       parameters:
-        - name: workSessionId
-          in: path
-          description: id of a work session
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: tabId
-          in: path
-          description: id of a tab
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: listId
-          in: path
-          description: id of a list
-          required: true
-          schema:
-            type: integer
-            format: int64
+        - $ref: '#/components/parameters/workSessionId'
+        - $ref: '#/components/parameters/tabId'
+        - $ref: '#/components/parameters/listId'
       requestBody:
         content:
           application/json:
@@ -491,27 +430,9 @@ paths:
       description: Delete a list
       operationId: deleteList
       parameters:
-        - name: workSessionId
-          in: path
-          description: id of a work session
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: tabId
-          in: path
-          description: id of a tab
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: listId
-          in: path
-          description: id of a list
-          required: true
-          schema:
-            type: integer
-            format: int64
+        - $ref: '#/components/parameters/workSessionId'
+        - $ref: '#/components/parameters/tabId'
+        - $ref: '#/components/parameters/listId'
       responses:
         '204':
           description: Successful operation
@@ -541,27 +462,9 @@ paths:
       description: Create a new task
       operationId: createTask
       parameters:
-        - name: workSessionId
-          in: path
-          description: id of a work session
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: tabId
-          in: path
-          description: id of a tab
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: listId
-          in: path
-          description: id of a list
-          required: true
-          schema:
-            type: integer
-            format: int64
+        - $ref: '#/components/parameters/workSessionId'
+        - $ref: '#/components/parameters/tabId'
+        - $ref: '#/components/parameters/listId'
       requestBody:
         content:
           application/json:
@@ -635,34 +538,10 @@ paths:
       description: Update a task
       operationId: updateTask
       parameters:
-        - name: workSessionId
-          in: path
-          description: id of a work session
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: tabId
-          in: path
-          description: id of a tab
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: listId
-          in: path
-          description: id of a list
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: taskId
-          in: path
-          description: id of a task
-          required: true
-          schema:
-            type: integer
-            format: int64
+        - $ref: '#/components/parameters/workSessionId'
+        - $ref: '#/components/parameters/tabId'
+        - $ref: '#/components/parameters/listId'
+        - $ref: '#/components/parameters/taskId'
       requestBody:
         content:
           application/json:
@@ -735,34 +614,10 @@ paths:
       description: Delete a task
       operationId: deleteTask
       parameters:
-        - name: workSessionId
-          in: path
-          description: id of a work session
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: tabId
-          in: path
-          description: id of a tab
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: listId
-          in: path
-          description: id of a list
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: taskId
-          in: path
-          description: id of a task
-          required: true
-          schema:
-            type: integer
-            format: int64
+        - $ref: '#/components/parameters/workSessionId'
+        - $ref: '#/components/parameters/tabId'
+        - $ref: '#/components/parameters/listId'
+        - $ref: '#/components/parameters/taskId'
       responses:
         '204':
           description: Successful operation
@@ -792,34 +647,10 @@ paths:
       description: Create a new timer record
       operationId: createTimerRecord
       parameters:
-        - name: workSessionId
-          in: path
-          description: id of a work session
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: tabId
-          in: path
-          description: id of a tab
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: listId
-          in: path
-          description: id of a list
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: taskId
-          in: path
-          description: id of a task
-          required: true
-          schema:
-            type: integer
-            format: int64
+        - $ref: '#/components/parameters/workSessionId'
+        - $ref: '#/components/parameters/tabId'
+        - $ref: '#/components/parameters/listId'
+        - $ref: '#/components/parameters/taskId'
       requestBody:
         content:
           application/json:
@@ -878,13 +709,7 @@ paths:
       description: Create a new template
       operationId: createTemplate
       parameters:
-        - name: userId
-          in: path
-          description: id of a tab
-          required: true
-          schema:
-            type: integer
-            format: int64
+        - $ref: '#/components/parameters/userId'
       requestBody:
         content:
           application/json:
@@ -947,29 +772,8 @@ paths:
       description: Delete a template
       operationId: deleteTemplate
       parameters:
-        - name: userId
-          in: path
-          description: id of a tab
-          required: true
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - name
-                - tabs
-              properties:
-                name:
-                  type: string
-                  example: Daily routine 1
-                tabs:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/TabInTemplate'
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/templateId'
       responses:
         '204':
           description: Successful operation
@@ -992,6 +796,55 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
+  parameters:
+    userId:
+      name: userId
+      in: path
+      description: id of a work session
+      required: true
+      schema:
+        type: integer
+        format: int64
+    workSessionId:
+      name: workSessionId
+      in: path
+      description: id of a work session
+      required: true
+      schema:
+        type: integer
+        format: int64
+    tabId:
+      name: tabId
+      in: path
+      description: id of a tab
+      required: true
+      schema:
+        type: integer
+        format: int64
+    listId:
+      name: listId
+      in: path
+      description: id of a list
+      required: true
+      schema:
+        type: integer
+        format: int64
+    taskId:
+      name: taskId
+      in: path
+      description: id of a task
+      required: true
+      schema:
+        type: integer
+        format: int64
+    templateId:
+      name: templateId
+      in: path
+      description: id of a task
+      required: true
+      schema:
+        type: integer
+        format: int64
   schemas:
     NewWorkSessionRes:
       required:
