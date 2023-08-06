@@ -6,6 +6,7 @@ info:
   version: 0.0.1
 tags:
   - name: auth
+  - name: user
   - name: work session
   - name: tab
   - name: list
@@ -36,6 +37,93 @@ paths:
   #                 type: number
   #                 example: 2
 
+  # users
+  /users/{userId}:
+    get:
+      tags:
+        - user
+      summary: Get a user
+      description: Get a user
+      operationId: getUser
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - name: templates
+          in: query
+          description: With the list of templates
+          required: false
+          schema:
+            type: boolean
+            example: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                  templates:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          example: 10
+                        name:
+                          type: string
+                          example: Daily routine 1
+                        tabs:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/TabInTemplate'
+              examples:
+                without parameters:
+                  summary: without query params
+                  value:
+                    email: "example@example.com"
+                with templates=true:
+                  summary: with templates=true
+                  value:
+                    email: "example@example.com"
+                    templates: [
+                      {
+                      id: 10,
+                      name: Daily routine 1,
+                      tabs: [
+                        {
+                          name: "tab 1",
+                          display_order: 2,
+                          lists: [
+                            {
+                              name: "On going",
+                              display_order: 3
+                            }
+                          ]
+                        }
+                      ]
+                      }
+                    ]
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Record not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   # work-sessions
   /users/{userId}/work-sessions:
