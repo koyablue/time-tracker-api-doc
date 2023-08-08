@@ -675,6 +675,7 @@ paths:
                   - name
                   - display_order
                   - total_time
+                  - is_active
                 properties:
                   id:
                     type: number
@@ -692,6 +693,9 @@ paths:
                   total_time:
                     type: number
                     example: 0
+                  is_active:
+                    type: boolean
+                    example: false
         '401':
           description: Unauthorized
           content:
@@ -727,9 +731,6 @@ paths:
           application/json:
             schema:
               type: object
-              required:
-                - name
-                - display_order
               properties:
                 name:
                   type: string
@@ -740,6 +741,9 @@ paths:
                 display_order:
                   type: number
                   example: 2
+                is_active:
+                  type: boolean
+                  example: true
       responses:
         '200':
           description: Successful operation
@@ -752,6 +756,7 @@ paths:
                   - name
                   - display_order
                   - total_time
+                  - is_active
                 properties:
                   id:
                     type: number
@@ -769,6 +774,9 @@ paths:
                   total_time:
                     type: number
                     example: 1200
+                  is_active:
+                    type: boolean
+                    example: true
         '401':
           description: Unauthorized
           content:
@@ -801,68 +809,6 @@ paths:
       responses:
         '204':
           description: Successful operation
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Record not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /work_sessions/{workSessionId}/tabs/{tabId}/lists/{listId}/tasks/{taskId}/timers:
-    post:
-      tags:
-        - task
-      summary: Create a new timer record
-      description: Create a new timer record
-      operationId: createTimerRecord
-      parameters:
-        - $ref: '#/components/parameters/workSessionId'
-        - $ref: '#/components/parameters/tabId'
-        - $ref: '#/components/parameters/listId'
-        - $ref: '#/components/parameters/taskId'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - time
-              properties:
-                time:
-                  type: number
-                  example: 1200
-      responses:
-        '201':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - id
-                  - task_id
-                  - time
-                properties:
-                  id:
-                    type: number
-                    example: 10
-                  task_id:
-                    type: number
-                    example: 10
-                  time:
-                    type: number
-                    example: 1200
         '401':
           description: Unauthorized
           content:
