@@ -83,22 +83,22 @@ paths:
                 without parameters:
                   summary: without query params
                   value:
-                    email: "example@example.com"
+                    email: 'example@example.com'
                 with templates=true:
                   summary: with templates=true
                   value:
-                    email: "example@example.com"
+                    email: 'example@example.com'
                     templates: [
                       {
                       id: 10,
                       name: Daily routine 1,
                       tabs: [
                         {
-                          name: "tab 1",
+                          name: 'tab 1',
                           display_order: 2,
                           lists: [
                             {
-                              name: "On going",
+                              name: 'On going',
                               display_order: 3
                             }
                           ]
@@ -135,13 +135,56 @@ paths:
       operationId: createWorkSession
       parameters:
         - $ref: '#/components/parameters/userId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template_id:
+                  type: number
+                  example: 2
       responses:
         '201':
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NewWorkSessionRes'
+                $ref: '#/components/schemas/NewWorkSessionResWithTemplate'
+              examples:
+                normal:
+                  summary: normal
+                  value:
+                    {
+                      id: 10,
+                      user_id: 10,
+                      start_at: '2023-01-08 04:05:06',
+                      end_at: null
+                    }
+                with a template:
+                  summary: with a template
+                  value:
+                    {
+                      id: 10,
+                      user_id: 10,
+                      start_at: '2023-01-08 04:05:06',
+                      end_at: null,
+                      tabs: [
+                        {
+                          id: 5,
+                          name: 'App development',
+                          lists: [
+                            {
+                              id: 10,
+                              tab_id: 10,
+                              name: 'On going',
+                              display_order: 1,
+                              tasks: [],
+                            }
+                          ]
+                        }
+                      ]
+                    }
         '401':
           description: Unauthorized
           content:
@@ -1004,6 +1047,64 @@ components:
         end_at:
           type: string
           example: null
+    NewWorkSessionResWithTemplate:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        user_id:
+          type: integer
+          example: 10
+        start_at:
+          type: string
+          example: 2023-01-08 04:05:06
+        end_at:
+          type: string
+          example: null
+        tabs:
+          type: array
+          items:
+            type: object
+            required:
+              - id
+              - name
+              - lists
+            properties:
+              id:
+                type: number
+                example: 5
+              name:
+                type: string
+                example: App development
+              lists:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - tab_id
+                    - name
+                    - display_order
+                    - tasks
+                  properties:
+                    id:
+                      type: number
+                      example: 10
+                    tab_id:
+                      type: string
+                      example: 2
+                    name:
+                      type: string
+                      example: On going
+                    display_order:
+                      type: number
+                      example: 2
+                    tasks:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Task'
+                        example: []
     WorkSessionUpdateRes:
       required:
         - id
@@ -1075,7 +1176,7 @@ components:
           type: number
           example: 10
         tab_id:
-          type: string
+          type: number
           example: 2
         name:
           type: string
