@@ -12,6 +12,7 @@ tags:
   - name: list
   - name: task
   - name: template
+  # TODO: Add validation errors
 paths:
   # auth
   /register:
@@ -53,6 +54,22 @@ paths:
                   token:
                     type: string
                     example: abc1234def
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /email-verification:
+    get:
+      tags:
+        - auth
+      summary: E-mail verification
+      description: Verify a user's e-mail address by checking token in the query parameter(?token=)
+      operationId: verifyEmail
+      responses:
+        '200':
+          description: Successful operation
         '500':
           description: Server error
           content:
@@ -260,7 +277,7 @@ paths:
       tags:
         - work session
       summary: Get the latest work session
-      description: Get the latest work session wiht null end_at value.
+      description: Get the latest work session with null end_at value.
       operationId: getLatestWorkSession
       parameters:
         - $ref: '#/components/parameters/userId'
