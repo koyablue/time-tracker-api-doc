@@ -14,28 +14,51 @@ tags:
   - name: template
 paths:
   # auth
-  # /register:
-  #   post:
-  #     tags:
-  #       - auth
-  #     summary: Register a new user
-  #     description: Register a new user
-  #     operationId: registerUser
-  #     requestBody:
-  #       content:
-  #         application/json:
-  #           schema:
-  #             required:
-  #               - email
-  #               - display_order
-  #             type: object
-  #             properties:
-  #               email:
-  #                 type: string
-  #                 example: example@example.com
-  #               password:
-  #                 type: number
-  #                 example: 2
+  /register:
+    post:
+      tags:
+        - auth
+      summary: Register a new user
+      description: Register a new user
+      operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+                - password
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: example@example.com
+                password:
+                  type: string
+                  example: password
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    example: 1
+                  email:
+                    type: string
+                    example: example@example.com
+                  token:
+                    type: string
+                    example: abc1234def
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   # users
   /users/{userId}:
