@@ -114,6 +114,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /logout:
+    post:
+      tags:
+        - auth
+      summary: User logout
+      description: User logout
+      responses:
+        '200':
+          description: Successful operation
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   # users
   /users/{userId}:
