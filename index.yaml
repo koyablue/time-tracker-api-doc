@@ -257,6 +257,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /users/{userId}/email-update/verification:
+    get:
+      tags:
+        - user
+      summary: Verify a user's new e-mail address
+      description: Verify a user's new e-mail address by checking token in the query parameter(?token=)
+      operationId: verifyNewEmail
+      parameters:
+        - $ref: '#/components/parameters/userId'
+      responses:
+        '200':
+          description: Successful operation
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   # work-sessions
   /users/{userId}/work-sessions:
