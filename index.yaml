@@ -12,7 +12,7 @@ tags:
   - name: list
   - name: task
   - name: template
-  # TODO: Add validation errors
+
 paths:
   # auth
   /register:
@@ -54,6 +54,12 @@ paths:
                   token:
                     type: string
                     example: abc1234def
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '500':
           description: Server error
           content:
@@ -108,6 +114,12 @@ paths:
                   token:
                     type: string
                     example: abc123def
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '500':
           description: Server error
           content:
@@ -253,6 +265,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '500':
           description: Server error
           content:
@@ -313,6 +331,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '500':
           description: Server error
           content:
@@ -404,6 +428,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '500':
           description: Server error
           content:
@@ -553,6 +583,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '500':
           description: Server error
           content:
@@ -627,6 +663,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '500':
           description: Server error
           content:
@@ -733,6 +775,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '500':
           description: Server error
           content:
@@ -808,6 +856,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '500':
           description: Server error
           content:
@@ -921,6 +975,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '500':
           description: Server error
           content:
@@ -1002,6 +1062,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '500':
           description: Server error
           content:
@@ -1099,6 +1165,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '500':
           description: Server error
           content:
@@ -1428,3 +1500,18 @@ components:
         message:
           type: string
           example: 'Error message here.'
+    ValidationErrorResponse:
+      type: object
+      properties:
+        fields:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+      example:
+        fields:
+          email:
+            - Email is invalid
+          password:
+            - Password must be at least 8 characters
