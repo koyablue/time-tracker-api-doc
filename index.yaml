@@ -217,6 +217,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /users/{userId}/email-update:
+    post:
+      tags:
+        - user
+      summary: Update a user's e-mail address
+      description: Update a user's e-mail address
+      operationId: updateUserEmail
+      parameters:
+        - $ref: '#/components/parameters/userId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: new e-mail address
+                  example: example@example.com
+      responses:
+        '200':
+          description: Successful operation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Record not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   # work-sessions
   /users/{userId}/work-sessions:
