@@ -319,6 +319,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /user/{userId}/password-update/verification:
+    get:
+      tags:
+        - user
+      summary: Verify a user's new password
+      description: Verify a user's new password by checking token in the query parameter(?token=)
+      operationId: verifyUserNewPassword
+      parameters:
+        - $ref: '#/components/parameters/userId'
+      responses:
+        '200':
+          description: Successful operation
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   # work-sessions
   /users/{userId}/work-sessions:
