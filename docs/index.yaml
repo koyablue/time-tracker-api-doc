@@ -360,7 +360,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /user/{userId}/password-update/save:
+  /user/password-update/save:
     post:
       tags:
         - user
