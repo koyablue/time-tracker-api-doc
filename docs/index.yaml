@@ -236,8 +236,8 @@ paths:
     post:
       tags:
         - user
-      summary: Send an e-mail to update a user's e-mail address
-      description: Send an e-mail to update a user's e-mail address
+      summary: Save new e-mail address. Send an e-mail to the user
+      description: Save new e-mail address. Send an e-mail to the user
       operationId: updateUserEmail
       parameters:
         - $ref: '#/components/parameters/userId'
@@ -290,51 +290,6 @@ paths:
       responses:
         '200':
           description: Successful operation
-        '500':
-          description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /users/email-update/save:
-    post:
-      tags:
-        - user
-      summary: Save a user's new e-mail address
-      description: Save a user's new e-mail address
-      operationId: saveUserNewEmail
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - email
-              properties:
-                email:
-                  type: string
-                  example: example@example.com
-      responses:
-        '200':
-          description: Successful operation
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Record not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '422':
-          description: Validation errors
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationErrorResponse'
         '500':
           description: Server error
           content:
