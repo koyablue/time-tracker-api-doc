@@ -41,34 +41,20 @@ paths:
                   type: string
                   example: password
       responses:
-        '200':
+        "200":
           description: Successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: number
-                    example: 1
-                  email:
-                    type: string
-                    example: example@example.com
-                  token:
-                    type: string
-                    example: abc1234def
-        '422':
+        "422":
           description: Validation errors
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /email-verification:
     get:
       tags:
@@ -77,14 +63,22 @@ paths:
       description: Verify a user's e-mail address by checking token in the query parameter(?token=)
       operationId: verifyUserEmail
       responses:
-        '200':
+        "200":
           description: Successful operation
-        '500':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: abc1234def
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /login:
     post:
       tags:
@@ -107,7 +101,7 @@ paths:
                   type: string
                   example: abc123def
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
@@ -117,18 +111,18 @@ paths:
                   token:
                     type: string
                     example: abc123def
-        '422':
+        "422":
           description: Validation errors
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /logout:
     post:
       tags:
@@ -136,14 +130,14 @@ paths:
       summary: User logout
       description: User logout
       responses:
-        '200':
+        "200":
           description: Successful operation
-        '500':
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   # users
   /users/{userId}:
@@ -154,7 +148,7 @@ paths:
       description: Get a user
       operationId: getUser
       parameters:
-        - $ref: '#/components/parameters/userId'
+        - $ref: "#/components/parameters/userId"
         - name: templates
           in: query
           description: With the list of templates
@@ -163,7 +157,7 @@ paths:
             type: boolean
             example: true
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
@@ -186,52 +180,49 @@ paths:
                         tabs:
                           type: array
                           items:
-                            $ref: '#/components/schemas/TabInTemplate'
+                            $ref: "#/components/schemas/TabInTemplate"
               examples:
                 without parameters:
                   summary: without query params
                   value:
-                    email: 'example@example.com'
+                    email: "example@example.com"
                 with templates=true:
                   summary: with templates=true
                   value:
-                    email: 'example@example.com'
-                    templates: [
-                      {
-                      id: 10,
-                      name: Daily routine 1,
-                      tabs: [
+                    email: "example@example.com"
+                    templates:
+                      [
                         {
-                          name: 'tab 1',
-                          display_order: 2,
-                          lists: [
-                            {
-                              name: 'On going',
-                              display_order: 3
-                            }
-                          ]
-                        }
+                          id: 10,
+                          name: Daily routine 1,
+                          tabs:
+                            [
+                              {
+                                name: "tab 1",
+                                display_order: 2,
+                                lists: [{ name: "On going", display_order: 3 }],
+                              },
+                            ],
+                        },
                       ]
-                      }
-                    ]
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Record not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /users/{userId}/email-update:
     post:
       tags:
@@ -240,7 +231,7 @@ paths:
       description: Save new e-mail address. Send an e-mail to the user
       operationId: updateUserEmail
       parameters:
-        - $ref: '#/components/parameters/userId'
+        - $ref: "#/components/parameters/userId"
       requestBody:
         content:
           application/json:
@@ -254,32 +245,32 @@ paths:
                   description: new e-mail address
                   example: example@example.com
       responses:
-        '200':
+        "200":
           description: Successful operation
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Record not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '422':
+                $ref: "#/components/schemas/ErrorResponse"
+        "422":
           description: Validation errors
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /users/email-update/verification:
     get:
       tags:
@@ -288,14 +279,14 @@ paths:
       description: Verify a user's new e-mail address by checking token in the query parameter(?token=)
       operationId: verifyUserNewEmail
       responses:
-        '200':
+        "200":
           description: Successful operation
-        '500':
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /users/{userId}/password-update:
     post:
       tags:
@@ -304,7 +295,7 @@ paths:
       description: Update a user's password
       operationId: updateUserPassword
       parameters:
-        - $ref: '#/components/parameters/userId'
+        - $ref: "#/components/parameters/userId"
       requestBody:
         content:
           application/json:
@@ -323,32 +314,32 @@ paths:
                   description: new password
                   example: password
       responses:
-        '200':
+        "200":
           description: Successful operation
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Record not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '422':
+                $ref: "#/components/schemas/ErrorResponse"
+        "422":
           description: Validation errors
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /users/password-update/request:
     post:
       tags:
@@ -368,32 +359,32 @@ paths:
                   type: string
                   example: example@example.com
       responses:
-        '200':
+        "200":
           description: Successful operation
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Record not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '422':
+                $ref: "#/components/schemas/ErrorResponse"
+        "422":
           description: Validation errors
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /user/password-update/verification:
     get:
       tags:
@@ -402,14 +393,14 @@ paths:
       description: Verify the token in the query parameter(?token=)
       operationId: verifyUserNewPassword
       responses:
-        '200':
+        "200":
           description: Successful operation
-        '500':
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /user/password-update/save:
     post:
       tags:
@@ -430,20 +421,20 @@ paths:
                   type: string
                   example: password
       responses:
-        '200':
+        "200":
           description: Successful operation
-        '422':
+        "422":
           description: Validation errors
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   # work-sessions
   /users/{userId}/work-sessions:
@@ -454,7 +445,7 @@ paths:
       description: Create a new work session
       operationId: createWorkSession
       parameters:
-        - $ref: '#/components/parameters/userId'
+        - $ref: "#/components/parameters/userId"
       requestBody:
         content:
           application/json:
@@ -465,12 +456,12 @@ paths:
                   type: number
                   example: 2
       responses:
-        '201':
+        "201":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NewWorkSessionResWithTemplate'
+                $ref: "#/components/schemas/NewWorkSessionResWithTemplate"
               examples:
                 normal:
                   summary: normal
@@ -478,8 +469,8 @@ paths:
                     {
                       id: 10,
                       user_id: 10,
-                      start_at: '2023-01-08 04:05:06',
-                      end_at: null
+                      start_at: "2023-01-08 04:05:06",
+                      end_at: null,
                     }
                 with a template:
                   summary: with a template
@@ -487,42 +478,44 @@ paths:
                     {
                       id: 10,
                       user_id: 10,
-                      start_at: '2023-01-08 04:05:06',
+                      start_at: "2023-01-08 04:05:06",
                       end_at: null,
-                      tabs: [
-                        {
-                          id: 5,
-                          name: 'App development',
-                          lists: [
-                            {
-                              id: 10,
-                              tab_id: 10,
-                              name: 'On going',
-                              display_order: 1,
-                              tasks: [],
-                            }
-                          ]
-                        }
-                      ]
+                      tabs:
+                        [
+                          {
+                            id: 5,
+                            name: "App development",
+                            lists:
+                              [
+                                {
+                                  id: 10,
+                                  tab_id: 10,
+                                  name: "On going",
+                                  display_order: 1,
+                                  tasks: [],
+                                },
+                              ],
+                          },
+                        ],
                     }
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '422':
+                $ref: "#/components/schemas/ErrorResponse"
+        "422":
           description: Validation errors
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /users/{userId}/work-sessions/{workSessionId}/end:
     put:
       tags:
@@ -531,33 +524,33 @@ paths:
       description: End a work session. Store the end time
       operationId: endWorkSession
       parameters:
-        - $ref: '#/components/parameters/userId'
-        - $ref: '#/components/parameters/workSessionId'
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/workSessionId"
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WorkSessionUpdateRes'
-        '401':
+                $ref: "#/components/schemas/WorkSessionUpdateRes"
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Record not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /users/{userId}/work-sessions/latest:
     get:
       tags:
@@ -566,9 +559,9 @@ paths:
       description: Get the latest work session with null end_at value.
       operationId: getLatestWorkSession
       parameters:
-        - $ref: '#/components/parameters/userId'
+        - $ref: "#/components/parameters/userId"
       responses:
-        '200':
+        "200":
           description: Successful operation. If there is no record, the response is null.
           content:
             application/json:
@@ -576,27 +569,27 @@ paths:
                 type: object
                 properties:
                   user:
-                    $ref: '#/components/schemas/UserInWorkSession'
+                    $ref: "#/components/schemas/UserInWorkSession"
                   work_session:
-                    $ref: '#/components/schemas/WorkSession'
-        '401':
+                    $ref: "#/components/schemas/WorkSession"
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Record not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   # tabs
   /work-sessions/{workSessionId}/tabs:
@@ -607,7 +600,7 @@ paths:
       description: Create a new tab
       operationId: createTab
       parameters:
-        - $ref: '#/components/parameters/workSessionId'
+        - $ref: "#/components/parameters/workSessionId"
       requestBody:
         content:
           application/json:
@@ -624,7 +617,7 @@ paths:
                   type: number
                   example: 2
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
@@ -652,32 +645,32 @@ paths:
                   lists:
                     type: array
                     items:
-                      $ref: '#/components/schemas/List'
+                      $ref: "#/components/schemas/List"
                     example: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Record not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '422':
+                $ref: "#/components/schemas/ErrorResponse"
+        "422":
           description: Validation errors
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /work-sessions/{workSessionId}/tabs/{tabId}:
     put:
       tags:
@@ -686,8 +679,8 @@ paths:
       description: Update a tab
       operationId: updateTab
       parameters:
-        - $ref: '#/components/parameters/workSessionId'
-        - $ref: '#/components/parameters/tabId'
+        - $ref: "#/components/parameters/workSessionId"
+        - $ref: "#/components/parameters/tabId"
       requestBody:
         content:
           application/json:
@@ -704,7 +697,7 @@ paths:
                   type: number
                   example: 2
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
@@ -732,32 +725,32 @@ paths:
                   lists:
                     type: array
                     items:
-                      $ref: '#/components/schemas/List'
+                      $ref: "#/components/schemas/List"
                     example: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Record not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '422':
+                $ref: "#/components/schemas/ErrorResponse"
+        "422":
           description: Validation errors
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
     delete:
       tags:
         - tab
@@ -765,29 +758,29 @@ paths:
       description: Delete a tab
       operationId: deleteTab
       parameters:
-        - $ref: '#/components/parameters/workSessionId'
-        - $ref: '#/components/parameters/tabId'
+        - $ref: "#/components/parameters/workSessionId"
+        - $ref: "#/components/parameters/tabId"
       responses:
-        '204':
+        "204":
           description: Successful operation
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Record not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   # lists
   /work_sessions/{workSessionId}/tabs/{tabId}/lists:
@@ -798,8 +791,8 @@ paths:
       description: Create a new list
       operationId: createList
       parameters:
-      - $ref: '#/components/parameters/workSessionId'
-      - $ref: '#/components/parameters/tabId'
+        - $ref: "#/components/parameters/workSessionId"
+        - $ref: "#/components/parameters/tabId"
       requestBody:
         content:
           application/json:
@@ -816,7 +809,7 @@ paths:
                   type: number
                   example: 2
       responses:
-        '201':
+        "201":
           description: Successful operation
           content:
             application/json:
@@ -844,32 +837,32 @@ paths:
                   tasks:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Task'
+                      $ref: "#/components/schemas/Task"
                     example: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Record not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '422':
+                $ref: "#/components/schemas/ErrorResponse"
+        "422":
           description: Validation errors
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /work_sessions/{workSessionId}/tabs/{tabId}/lists/{listId}:
     put:
       tags:
@@ -878,9 +871,9 @@ paths:
       description: Update a list
       operationId: updateList
       parameters:
-        - $ref: '#/components/parameters/workSessionId'
-        - $ref: '#/components/parameters/tabId'
-        - $ref: '#/components/parameters/listId'
+        - $ref: "#/components/parameters/workSessionId"
+        - $ref: "#/components/parameters/tabId"
+        - $ref: "#/components/parameters/listId"
       requestBody:
         content:
           application/json:
@@ -897,7 +890,7 @@ paths:
                   type: number
                   example: 2
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
@@ -925,32 +918,32 @@ paths:
                   tasks:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Task'
+                      $ref: "#/components/schemas/Task"
                     example: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Record not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '422':
+                $ref: "#/components/schemas/ErrorResponse"
+        "422":
           description: Validation errors
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
     delete:
       tags:
         - list
@@ -958,30 +951,30 @@ paths:
       description: Delete a list
       operationId: deleteList
       parameters:
-        - $ref: '#/components/parameters/workSessionId'
-        - $ref: '#/components/parameters/tabId'
-        - $ref: '#/components/parameters/listId'
+        - $ref: "#/components/parameters/workSessionId"
+        - $ref: "#/components/parameters/tabId"
+        - $ref: "#/components/parameters/listId"
       responses:
-        '204':
+        "204":
           description: Successful operation
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Record not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   # tasks
   /work_sessions/{workSessionId}/tabs/{tabId}/lists/{listId}/tasks:
@@ -992,9 +985,9 @@ paths:
       description: Create a new task
       operationId: createTask
       parameters:
-        - $ref: '#/components/parameters/workSessionId'
-        - $ref: '#/components/parameters/tabId'
-        - $ref: '#/components/parameters/listId'
+        - $ref: "#/components/parameters/workSessionId"
+        - $ref: "#/components/parameters/tabId"
+        - $ref: "#/components/parameters/listId"
       requestBody:
         content:
           application/json:
@@ -1014,7 +1007,7 @@ paths:
                   type: number
                   example: 2
       responses:
-        '201':
+        "201":
           description: Successful operation
           content:
             application/json:
@@ -1046,30 +1039,30 @@ paths:
                   is_active:
                     type: boolean
                     example: false
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Record not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '422':
+                $ref: "#/components/schemas/ErrorResponse"
+        "422":
           description: Validation errors
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /work_sessions/{workSessionId}/tabs/{tabId}/lists/{listId}/tasks/{taskId}:
     put:
       tags:
@@ -1078,10 +1071,10 @@ paths:
       description: Update a task
       operationId: updateTask
       parameters:
-        - $ref: '#/components/parameters/workSessionId'
-        - $ref: '#/components/parameters/tabId'
-        - $ref: '#/components/parameters/listId'
-        - $ref: '#/components/parameters/taskId'
+        - $ref: "#/components/parameters/workSessionId"
+        - $ref: "#/components/parameters/tabId"
+        - $ref: "#/components/parameters/listId"
+        - $ref: "#/components/parameters/taskId"
       requestBody:
         content:
           application/json:
@@ -1101,7 +1094,7 @@ paths:
                   type: boolean
                   example: true
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
@@ -1133,30 +1126,30 @@ paths:
                   is_active:
                     type: boolean
                     example: true
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Record not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '422':
+                $ref: "#/components/schemas/ErrorResponse"
+        "422":
           description: Validation errors
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
     delete:
       tags:
         - task
@@ -1164,31 +1157,31 @@ paths:
       description: Delete a task
       operationId: deleteTask
       parameters:
-        - $ref: '#/components/parameters/workSessionId'
-        - $ref: '#/components/parameters/tabId'
-        - $ref: '#/components/parameters/listId'
-        - $ref: '#/components/parameters/taskId'
+        - $ref: "#/components/parameters/workSessionId"
+        - $ref: "#/components/parameters/tabId"
+        - $ref: "#/components/parameters/listId"
+        - $ref: "#/components/parameters/taskId"
       responses:
-        '204':
+        "204":
           description: Successful operation
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Record not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   # templates
   /users/{userId}/templates:
@@ -1199,7 +1192,7 @@ paths:
       description: Create a new template
       operationId: createTemplate
       parameters:
-        - $ref: '#/components/parameters/userId'
+        - $ref: "#/components/parameters/userId"
       requestBody:
         content:
           application/json:
@@ -1215,9 +1208,9 @@ paths:
                 tabs:
                   type: array
                   items:
-                    $ref: '#/components/schemas/TabInTemplate'
+                    $ref: "#/components/schemas/TabInTemplate"
       responses:
-        '201':
+        "201":
           description: Successful operation
           content:
             application/json:
@@ -1241,25 +1234,25 @@ paths:
                   tabs:
                     type: array
                     items:
-                      $ref: '#/components/schemas/TabInTemplate'
-        '401':
+                      $ref: "#/components/schemas/TabInTemplate"
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '422':
+                $ref: "#/components/schemas/ErrorResponse"
+        "422":
           description: Validation errors
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /users/{userId}/templates/{templateId}:
     delete:
       tags:
@@ -1268,29 +1261,29 @@ paths:
       description: Delete a template
       operationId: deleteTemplate
       parameters:
-        - $ref: '#/components/parameters/userId'
-        - $ref: '#/components/parameters/templateId'
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/templateId"
       responses:
-        '204':
+        "204":
           description: Successful operation
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Record not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   parameters:
     userId:
@@ -1417,7 +1410,7 @@ components:
                     tasks:
                       type: array
                       items:
-                        $ref: '#/components/schemas/Task'
+                        $ref: "#/components/schemas/Task"
                         example: []
     WorkSessionUpdateRes:
       required:
@@ -1451,7 +1444,7 @@ components:
           example: 10
         image_url:
           type: string
-          example: 'https://s3.amazonaws.com/time-tracker/images/users/10/01.png'
+          example: "https://s3.amazonaws.com/time-tracker/images/users/10/01.png"
     Task:
       required:
         - id
@@ -1501,7 +1494,7 @@ components:
         tasks:
           type: array
           items:
-            $ref: '#/components/schemas/Task'
+            $ref: "#/components/schemas/Task"
     Tab:
       type: object
       required:
@@ -1518,7 +1511,7 @@ components:
         lists:
           type: array
           items:
-            $ref: '#/components/schemas/List'
+            $ref: "#/components/schemas/List"
     ListInTemplate:
       type: object
       required:
@@ -1547,7 +1540,7 @@ components:
         lists:
           type: array
           items:
-            $ref: '#/components/schemas/ListInTemplate'
+            $ref: "#/components/schemas/ListInTemplate"
     WorkSession:
       type: object
       required:
@@ -1569,20 +1562,20 @@ components:
         tabs:
           type: array
           items:
-            $ref: '#/components/schemas/Tab'
+            $ref: "#/components/schemas/Tab"
     ErrorResponse:
       type: object
       properties:
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/ErrorMessage'
+            $ref: "#/components/schemas/ErrorMessage"
     ErrorMessage:
       type: object
       properties:
         message:
           type: string
-          example: 'Error message here.'
+          example: "Error message here."
     ValidationErrorResponse:
       type: object
       properties:
