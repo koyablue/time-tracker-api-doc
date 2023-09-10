@@ -1,13 +1,17 @@
 # TimeTracker Backend API documentation
+
 This is a documentation for the backend API of TimeTracker.
 
 # URL
+
 https://koyablue.github.io/time-tracker-api-doc/
 
 # Built with
+
 ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
 
 # DB architecture
+
 ## Tables and relations
 
 ### Users
@@ -15,33 +19,29 @@ https://koyablue.github.io/time-tracker-api-doc/
 **users**
 | id | email | password | created_at | updated_at |
 | --- | --- | --- | --- | --- |
-|  |  |  |  |  |
+| | | | | |
 
 #### Relations
+
 - has many
   - WorkSessions
-- has one
-  - UserEmailVerification
 
 ### UserEmailVerification
 
 **user_email_verifications**
 | id | email | verification_token | created_at | updated_at |
 | --- | --- | --- | --- | --- |
-|  |  |  |  |  |
-
-#### Relations
-- belongs to
-  - User
+| | | | | |
 
 ### WorkSession
 
 **work_sessions**
 | id | user_id | start_at | end_at |
 | --- | --- | --- | --- |
-|  |  |  |  |
+| | | | |
 
 #### Relations
+
 - has many
   - Tabs
 - belongs to
@@ -52,9 +52,10 @@ https://koyablue.github.io/time-tracker-api-doc/
 **tabs**
 | id | work_session_id | name | display_order | created_at | updated_at |
 | --- | --- | --- | --- | --- | --- |
-|  |  |  |  |  |   |
+| | | | | | |
 
 #### Relations
+
 - belongs to
   - WorkSession
 - has many
@@ -65,9 +66,10 @@ https://koyablue.github.io/time-tracker-api-doc/
 **lists**
 | id | tab_id | name | display_order | created_at | updated_at |
 | --- | --- | --- | --- | --- | ---|
-|  |  |  |  |  |  |
+| | | | | | |
 
 #### Relations
+
 - has many
   - Tasks
 - belongs to
@@ -78,9 +80,10 @@ https://koyablue.github.io/time-tracker-api-doc/
 **tasks**
 | id | list_id | display_order | name | description | total_time | created_at | updated_at |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-|  |  |  |  |  |  |  |
+| | | | | | | |
 
 #### Relations
+
 - belongs to
   - List
 
@@ -89,9 +92,10 @@ https://koyablue.github.io/time-tracker-api-doc/
 **templates**
 | id | user_id | name | created_at | updated_at |
 | --- | --- | --- | --- | --- |
-|  |  |  |  |
+| | | | |
 
 #### Relations
+
 - has many
   - Tabs
 - belongs to
@@ -102,9 +106,10 @@ https://koyablue.github.io/time-tracker-api-doc/
 **template_tabs**
 | id | template_id | name | display_order | created_at | updated_at |
 | --- | --- | --- | --- | --- | --- |
-|  |  |  |  |  |
+| | | | | |
 
 #### Relations
+
 - has many
   - TemplateLists
 - belongs to
@@ -115,9 +120,10 @@ https://koyablue.github.io/time-tracker-api-doc/
 **template_lists**
 | id | template_tab_id | name | display_order | created_at | updated_at |
 | --- | --- | --- | --- | --- | --- |
-|  |  |  |  |  |
+| | | | | |
 
 #### Relations
+
 - belongs to
   - TemplateTab
 
