@@ -435,6 +435,48 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /users/authenticated:
+    get:
+      tags:
+        - user
+      summary: Get a logged in user.
+      description: Get a logged in user.
+      operationId: getLoggedInUser
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - email
+                properties:
+                  id:
+                    type: number
+                    example: 1
+                  email:
+                    type: string
+                    example: example@example.com
+        "404":
+          description: Record not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "422":
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
   # work-sessions
   /users/{userId}/work-sessions:
